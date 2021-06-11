@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "myDashpay",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

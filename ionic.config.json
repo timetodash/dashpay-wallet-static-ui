@@ -1,0 +1,7 @@
+{
+  "name": "myDashpay",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
