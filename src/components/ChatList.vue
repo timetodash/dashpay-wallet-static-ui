@@ -1,19 +1,19 @@
 <template>
-  <chat-conversations
+  <chat-list-item
     v-for="(contact, idx) in contactList"
     :key="idx"
     href="/chat"
     :contact="contact"
   >
-  </chat-conversations>
+  </chat-list-item>
 </template>
 
 <script>
-import ChatConversations from "@/components/ChatConversations.vue";
+import ChatListItem from "@/components/ChatListItem.vue";
 // import Chat from "@/views/Chat.vue";
 
 export default {
-  components: { ChatConversations },
+  components: { ChatListItem },
   setup() {
     const contactList = [
       {

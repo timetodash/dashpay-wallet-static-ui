@@ -38,12 +38,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .user-avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 4px;
+  margin-left: 4px; /* left aligns profile avatar to the other avatars */
 }
 .user-avatar > img {
   height: 37px;
@@ -51,6 +51,7 @@ export default {
 }
 .username {
   /* font-family: Inter; */
+  padding-left: 16px;
   font-size: 16px;
   font-weight: 600;
 }

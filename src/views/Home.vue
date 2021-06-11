@@ -9,7 +9,7 @@
         <ion-searchbar></ion-searchbar>
       </ion-toolbar>
 
-      <contact-list></contact-list>
+      <chat-list></chat-list>
 
       <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button class="compose">
@@ -44,7 +44,7 @@ import {
 } from "@ionic/vue";
 import { ellipse, add, scan } from "ionicons/icons";
 
-import ContactList from "@/components/ContactList.vue";
+import ChatList from "@/components/ChatList.vue";
 import HomeHeader from "@/components/HomeHeader.vue";
 
 export default {
@@ -57,7 +57,7 @@ export default {
     IonFab,
     IonFabButton,
     IonIcon,
-    ContactList,
+    ChatList,
     HomeHeader,
   },
 
