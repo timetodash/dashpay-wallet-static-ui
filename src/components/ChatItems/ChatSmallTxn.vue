@@ -1,32 +1,33 @@
 <template>
   <div
     class="chatbubble_txn_small"
-    style=""
     :class="{
-      user: chat.direction === 'sent',
-      chat_partner_txn: chat.direction === 'received',
+      user: direction.toUpperCase() === 'SENT',
+      chat_partner_txn: direction.toUpperCase() === 'RECEIVED',
     }"
   >
     <div class="sameline">
       <ion-icon
-        v-if="chat.direction === 'sent'"
+        v-if="direction.toUpperCase() === 'SENT'"
         class="dash_icon_small"
         :src="require('/public/assets/icons/userSent.svg')"
       ></ion-icon>
       <ion-icon
-        v-else-if="chat.direction === 'received'"
+        v-else-if="direction.toUpperCase() === 'RECEIVED'"
         class="dash_icon_small"
         :src="require('/public/assets/icons/partnerSent.svg')"
       ></ion-icon>
 
       <div class="leftpadding">
-        <div class="amount">{{ chat.amount }} Dash</div>
-        <div class="usdamount">~{{ chat.usdAmount }} USD</div>
+        <div class="amount">{{ amount }} Dash</div>
+        <div class="usdamount">~{{ (amount * 175).toFixed(2) }} USD</div>
       </div>
     </div>
     <div class="alignrow">
       <div class="chat_timestamp">
-        {{ chat.timestamp }}
+        <!-- {{ msg.createdAt.getHours() }}:{{ msg.createdAt.getMinutes() }} -->
+        <!-- {{ hours }}:{{ minutes }} -->
+        {{ time }}
       </div>
       <ion-icon
         class="align_checkmark checkmark_color"
@@ -43,8 +44,7 @@ import { checkmarkDoneOutline } from "ionicons/icons";
 // import { reactive } from "vue";
 
 export default {
-  name: "Tab1",
-  props: ["chat"],
+  props: ["direction", "amount", "time"],
   components: {
     IonIcon,
   },
@@ -56,13 +56,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chatbubble_txn_small {
   display: flex;
   flex-wrap: nowrap;
   padding-bottom: 3px;
   padding-top: 3px;
   padding-right: 13px;
+  margin-bottom: 6px;
   width: 174px;
   justify-content: space-between;
   box-shadow: 0px 2px 4px rgba(106, 103, 251, 0.3);

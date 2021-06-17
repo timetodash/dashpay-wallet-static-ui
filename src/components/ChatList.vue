@@ -1,19 +1,22 @@
 <template>
-  <chat-list-item
-    v-for="(contact, idx) in contactList"
-    :key="idx"
-    href="/chat"
-    :contact="contact"
-  >
-  </chat-list-item>
+  <div v-for="(contact, idx) in contactList" :key="idx">
+    <chat-list-item-legacy
+      v-if="contact.id === 'legacy'"
+      href="/ChatLegacyPayment"
+      :contact="contact"
+    >
+    </chat-list-item-legacy>
+    <chat-list-item v-else href="/chat" :contact="contact"> </chat-list-item>
+  </div>
 </template>
 
 <script>
 import ChatListItem from "@/components/ChatListItem.vue";
+import ChatListItemLegacy from "@/components/ChatListItemLegacy.vue";
 // import Chat from "@/views/Chat.vue";
 
 export default {
-  components: { ChatListItem },
+  components: { ChatListItem, ChatListItemLegacy },
   setup() {
     const contactList = [
       {
@@ -47,6 +50,7 @@ export default {
         createdAt: "May 20",
       },
       {
+        id: "legacy",
         name: "Legacy Payments",
         avatar: "/assets/avatars/dash.png",
         lastMessage: "Sent",
