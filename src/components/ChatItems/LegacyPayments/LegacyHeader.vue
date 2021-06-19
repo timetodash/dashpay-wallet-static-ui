@@ -1,18 +1,16 @@
 <template>
   <ion-buttons slot="start"
-    ><ion-back-button
-      style="color: rgba(0, 0, 0, 0.5); font-weight: 50"
-      default-href="/home"
-      :icon="arrowBack"
-    ></ion-back-button
+    ><ion-back-button default-href="/home" :icon="arrowBack"></ion-back-button
   ></ion-buttons>
-  <ion-avatar slot="start" class="user-avatar"
-    ><img src="/assets/avatars/H.png"
+  <ion-avatar slot="start" class="useravatar"
+    ><img
+      class="squareborder"
+      :src="require('/public/assets/avatars/dash.png')"
   /></ion-avatar>
-  <div class="username">HoneyBadger</div>
+  <div class="username">Legacy Payments</div>
   <ion-buttons slot="end">
     <ion-button
-      ><ion-icon :icon="ellipsisVertical" class="ellipsis-color"></ion-icon
+      ><ion-icon :icon="ellipsisVertical" class="ellipsis_color"></ion-icon
     ></ion-button>
   </ion-buttons>
 </template>
@@ -28,12 +26,14 @@ import {
 import { arrowBack, ellipsisVertical } from "ionicons/icons";
 
 export default {
+  props: ["friendOwnerId"],
   components: {
     IonAvatar,
     IonButtons,
     IonBackButton,
     IonButton,
     IonIcon,
+    // chats,
   },
 
   setup() {
@@ -46,16 +46,21 @@ export default {
 </script>
 
 <style scoped>
-/* ion-back-button {
+ion-back-button {
+  color: rgba(0, 0, 0, 0.5);
   font-weight: 100;
-  --icon-font-weight: 100;
-} */
-.user-avatar {
+  --ionicon-stroke-width: 10px;
+}
+.useravatar {
   display: flex;
   align-items: center;
   justify-content: left;
+  border-radius: 10px;
 }
-.user-avatar > img {
+.squareborder {
+  border-radius: 10px;
+}
+.useravatar > img {
   height: 30px;
   width: 30px;
 }
@@ -68,7 +73,7 @@ export default {
   color: #000000;
   margin-left: -21px;
 }
-.ellipsis-color {
+.ellipsis_color {
   color: rgba(0, 0, 0, 0.61);
 }
 </style>

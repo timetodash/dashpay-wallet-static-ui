@@ -44,11 +44,33 @@
       </div>
     </div>
   </div>
+  <!-- <ion-buttons
+    ><ion-button shape="round" class="decline"></ion-button
+    ><ion-button class="accept"></ion-button>
+  </ion-buttons> -->
+  <ion-row v-if="chat.type === 'request'" class="ion-no-wrap">
+    <ion-chip class="decline"
+      ><ion-label class="decline_text">Decline</ion-label
+      ><ion-icon
+        :icon="closeOutline"
+        class="decline_icon"
+        style="width: 14px; height: 14px"
+      ></ion-icon
+    ></ion-chip>
+    <ion-chip class="accept"
+      ><ion-label class="accept_text">Accept</ion-label>
+      <ion-icon
+        class="accept_icon"
+        :src="require('/public/assets/icons/accept.svg')"
+      >
+      </ion-icon>
+    </ion-chip>
+  </ion-row>
 </template>
 
 <script>
 import { IonIcon } from "@ionic/vue";
-import { checkmarkDoneOutline } from "ionicons/icons";
+import { checkmarkDoneOutline, closeOutline } from "ionicons/icons";
 // import { reactive } from "vue";
 
 export default {
@@ -60,6 +82,7 @@ export default {
   setup() {
     return {
       checkmarkDoneOutline,
+      closeOutline,
     };
   },
 };
@@ -67,8 +90,8 @@ export default {
 
 <style scoped>
 .chatbubble_txn_big {
-  min-height: 77px;
-  width: 174px;
+  min-height: 76px;
+  width: 222px;
   box-shadow: 0px 2px 4px rgba(106, 103, 251, 0.3);
 }
 .title {
@@ -139,5 +162,56 @@ export default {
   height: 27px;
   margin-bottom: -6px;
   margin-left: -10px;
+}
+ion-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 106px;
+  height: 36px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+ion-chip {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 106px;
+  height: 36px;
+  margin: 8px 12px 8px 0px;
+  border-radius: 10px;
+}
+.decline {
+  --background: #f2f4ff;
+  margin-right: 12px;
+}
+.decline_text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #6a67fb;
+}
+.decline_icon {
+  --ionicon-stroke-width: 55px;
+  color: #6a67fb;
+}
+.accept {
+  --background: linear-gradient(40.37deg, #6a67fb 0.15%, #8d71ff 100%);
+  /* border: f2f4ff solid 1px; */
+}
+.accept_text {
+  /* font-family: Inter; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #ffffff;
+}
+.accept_icon {
+  height: 11px;
+  width: 11px;
 }
 </style>

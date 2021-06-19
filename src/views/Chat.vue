@@ -4,29 +4,35 @@
       <ion-toolbar><chat-header></chat-header> </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div style="height: 100%">
-        <ion-grid class="ion-no-padding">
-          <ion-row
-            v-for="(chat, idx) in chatHistory"
-            :key="idx"
-            style="padding-top: 4px; padding-bottom: 4px"
-          >
-            <ion-col class="ion-padding-horizontal">
-              <chat-message v-if="chat.message && !chat.amount" :chat="chat">
-              </chat-message>
-              <chat-txn
-                v-if="(chat.amount && chat.message) || chat.type === 'request'"
-                :chat="chat"
-              >
-              </chat-txn>
-              <chat-small-txn
-                v-if="chat.type != 'request' && chat.amount && !chat.message"
-                :chat="chat"
-              >
-              </chat-small-txn>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <div class="scroll_container">
+        <div>
+          <ion-grid class="ion-no-padding">
+            <ion-row
+              v-for="(chat, idx) in chatHistory"
+              :key="idx"
+              style="padding-top: 4px; padding-bottom: 4px"
+            >
+              <ion-col class="ion-padding-horizontal">
+                <chat-message v-if="chat.message && !chat.amount" :chat="chat">
+                </chat-message>
+                <chat-txn
+                  v-if="
+                    (chat.amount && chat.message) || chat.type === 'request'
+                  "
+                  :chat="chat"
+                >
+                </chat-txn>
+                <chat-small-txn
+                  v-if="chat.type != 'request' && chat.amount && !chat.message"
+                  :direction="chat.direction"
+                  :amount="chat.amount"
+                  :time="chat.timestamp"
+                >
+                </chat-small-txn>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       </div>
     </ion-content>
     <ion-footer class="ion-no-border">
@@ -173,6 +179,12 @@ export default {
 </script>
 
 <style scoped>
+.scroll_container {
+  height: 100%;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column-reverse;
+}
 ion-item {
   background: #f1f1f3;
   padding: 0px;
@@ -194,57 +206,13 @@ ion-header {
 ion-toolbar {
   --background: primary;
 }
-.chatbubble_txn_small {
-  display: flex;
-  justify-content: space-between;
-  padding-right: 13px;
-  width: 174px;
-  box-shadow: 0px 2px 4px rgba(106, 103, 251, 0.3);
-  border-radius: 100px;
-}
 
 /* TODO: set background gradient and mask/clip chat messages */
 /* .backgroundgradient {
   background: linear-gradient(180deg, #f2edfd 0%, #b863a6 100%);
 } */
 
-.transfer-amount-small {
-  /* font-family: Inter; */
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  /* identical to box height */
-
-  letter-spacing: -0.003em;
-
-  color: #000000;
-}
-
-.transfer-usdamount-small {
-  /* font-family: Inter; */
-  display: flex;
-  justify-content: flex-start;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 9px;
-  line-height: 11px;
-  /* identical to box height */
-
-  letter-spacing: -0.004em;
-
-  color: rgba(0, 0, 0, 0.4);
-}
-
 ion-footer {
   padding-left: 16px;
 }
-
-.message-box {
-  padding: 0px 11px 8px 16px;
-}
-/* input-label { */
 </style>

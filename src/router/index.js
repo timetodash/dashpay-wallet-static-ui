@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 // import { RouteRecordRaw } from 'vue-router';
 import Home from '@/views/Home.vue'
 import Chat from '@/views/Chat.vue'
+import ChatLegacyPayment from '@/components/ChatItems/LegacyPayments/ChatLegacyPayment.vue'
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
   {
     path: '/chat',
     component: Chat,
+  },
+  {
+    path: '/ChatLegacyPayment',
+    component: ChatLegacyPayment,
   },
 ]
 
