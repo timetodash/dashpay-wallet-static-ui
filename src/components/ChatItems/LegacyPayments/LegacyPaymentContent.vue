@@ -16,7 +16,7 @@
       transaction.transferDirection === 'sent' &&
       transaction.remoteAddress != 'false'
     "
-    class="flex sent_txn ion-justify-content-end"
+    class="sent_txn flex ion-justify-content-end"
   >
     You sent
     <div class="address">
@@ -128,8 +128,6 @@ export default {
   line-height: 12px;
   color: #6a67fb;
   margin: 6px 2px 6px 0px;
-  display: flex;
-  justify-content: flex-end;
 }
 .received_txn {
   /* font-family: Inter; */
