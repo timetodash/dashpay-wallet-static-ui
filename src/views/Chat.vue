@@ -32,9 +32,17 @@
               </ion-col>
             </ion-row>
           </ion-grid>
+          <IncomingRequests></IncomingRequests>
+          <!-- TODO add v-if condition in integration-->
         </div>
       </div>
     </ion-content>
+    <ion-modal css-class="modal-design" :is-open="true">
+      <SendRequestDashModal></SendRequestDashModal>
+    </ion-modal>
+    <ion-modal css-class="modal-design" :is-open="false">
+      <AcceptRequestModal></AcceptRequestModal>
+    </ion-modal>
     <ion-footer class="ion-no-border">
       <ion-toolbar> <chat-footer></chat-footer> </ion-toolbar>
     </ion-footer>
@@ -42,7 +50,17 @@
 </template>
 
 <script>
-import { IonPage, IonContent, IonCol, IonGrid, IonRow } from "@ionic/vue";
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonContent,
+  IonCol,
+  IonGrid,
+  IonRow,
+  IonModal,
+  IonFooter,
+} from "@ionic/vue";
 import {
   checkmarkDoneOutline,
   happyOutline,
@@ -54,12 +72,16 @@ import ChatMessage from "@/components/ChatItems/ChatMessage.vue";
 import ChatTxn from "@/components/ChatItems/ChatTxn.vue";
 import ChatSmallTxn from "@/components/ChatItems/ChatSmallTxn.vue";
 import ChatFooter from "@/components/ChatItems/ChatFooter.vue";
+import SendRequestDashModal from "@/components/TransactionModals/SendRequestDashModal.vue";
+import AcceptRequestModal from "@/components/TransactionModals/AcceptRequestModal.vue";
+import IncomingRequests from "@/components/TransactionModals/IncomingRequests.vue";
 
 export default {
-  name: "Tab1",
   components: {
     IonContent,
     IonPage,
+    IonHeader,
+    IonToolbar,
     IonCol,
     IonGrid,
     IonRow,
@@ -68,104 +90,109 @@ export default {
     ChatTxn,
     ChatSmallTxn,
     ChatFooter,
+    IonModal,
+    IonFooter,
+    SendRequestDashModal,
+    AcceptRequestModal,
+    IncomingRequests,
   },
 
   setup() {
     // const transactionHistory = ref([]);
 
     const chatHistory = [
-      {
-        type: "message",
-        direction: "received",
-        note: "",
-        amount: "",
-        usdAmount: "",
-        message:
-          "Hey, could you send me some more dash? you sent me 2 dash too few",
-        timestamp: "10:08",
-      },
-      {
-        type: "request",
-        direction: "received",
-        note: "Requested",
-        amount: 2,
-        usdAmount: 400,
-        message: "",
-        timestamp: "10:10",
-      },
-      {
-        type: "transfer",
-        direction: "sent",
-        note: "You sent",
-        amount: 1,
-        usdAmount: 200,
-        message: "Sorry mate, here it is",
-        timestamp: "10:30",
-      },
-      {
-        type: "transfer",
-        direction: "sent",
-        note: "",
-        amount: 1,
-        usdAmount: 200,
-        message: "",
-        timestamp: "10:31",
-      },
-      {
-        type: "transfer",
-        direction: "received",
-        note: "Honey Badger sent",
-        amount: 1,
-        usdAmount: 200,
-        message: "oh wait, I owed you 2 dash for last week",
-        timestamp: "10:35",
-      },
-      {
-        type: "transfer",
-        direction: "received",
-        note: "",
-        amount: 1,
-        usdAmount: 200,
-        message: "",
-        timestamp: "10:36",
-      },
-      {
-        type: "message",
-        direction: "sent",
-        note: "",
-        amount: "",
-        usdAmount: "",
-        message: "ok, thanks. love how easy it is to send dash",
-        timestamp: "10:33",
-      },
-      {
-        type: "message",
-        direction: "received",
-        note: "",
-        amount: "",
-        usdAmount: "",
-        message: "yeah I know! incredible app",
-        timestamp: "10:33",
-      },
-      {
-        type: "message",
-        direction: "sent",
-        note: "",
-        amount: "",
-        usdAmount: "",
-        message:
-          "btw, let me know if you want to go to the thirsty camel again sometime",
-        timestamp: "10:33",
-      },
-      {
-        type: "message",
-        direction: "received",
-        note: "",
-        amount: "",
-        usdAmount: "",
-        message: "yes, sounds great, would love to",
-        timestamp: "10:33",
-      },
+      //   {
+      //     type: "message",
+      //     direction: "received",
+      //     note: "",
+      //     amount: "",
+      //     usdAmount: "",
+      //     message:
+      //       "Hey, could you send me some more dash? you sent me 2 dash too few",
+      //     timestamp: "10:08",
+      //   },
+      //   {
+      //     type: "request",
+      //     direction: "received",
+      //     note: "Requested",
+      //     amount: 2,
+      //     usdAmount: 400,
+      //     message: "",
+      //     timestamp: "10:10",
+      //   },
+      //   {
+      //     type: "transfer",
+      //     direction: "sent",
+      //     note: "You sent",
+      //     amount: 1,
+      //     usdAmount: 200,
+      //     message: "Sorry mate, here it is",
+      //     timestamp: "10:30",
+      //   },
+      //   {
+      //     type: "transfer",
+      //     direction: "sent",
+      //     note: "",
+      //     amount: 1,
+      //     usdAmount: 200,
+      //     message: "",
+      //     timestamp: "10:31",
+      //   },
+      //   {
+      //     type: "transfer",
+      //     direction: "received",
+      //     note: "Honey Badger sent",
+      //     amount: 1,
+      //     usdAmount: 200,
+      //     message: "oh wait, I owed you 2 dash for last week",
+      //     timestamp: "10:35",
+      //   },
+      //   {
+      //     type: "transfer",
+      //     direction: "received",
+      //     note: "",
+      //     amount: 1,
+      //     usdAmount: 200,
+      //     message: "",
+      //     timestamp: "10:36",
+      //   },
+      //   {
+      //     type: "message",
+      //     direction: "sent",
+      //     note: "",
+      //     amount: "",
+      //     usdAmount: "",
+      //     message: "ok, thanks. love how easy it is to send dash",
+      //     timestamp: "10:33",
+      //   },
+      //   {
+      //     type: "message",
+      //     direction: "received",
+      //     note: "",
+      //     amount: "",
+      //     usdAmount: "",
+      //     message: "yeah I know! incredible app",
+      //     timestamp: "10:33",
+      //   },
+      //   {
+      //     type: "message",
+      //     direction: "sent",
+      //     note: "",
+      //     amount: "",
+      //     usdAmount: "",
+      //     message:
+      //       "btw, let me know if you want to go to the thirsty camel again sometime",
+      //     timestamp: "10:33",
+      //   },
+      //   {
+      //     type: "message",
+      //     direction: "received",
+      //     note: "",
+      //     amount: "",
+      //     usdAmount: "",
+      //     message: "yes, sounds great, would love to",
+      //     timestamp: "10:33",
+      //   },
     ];
 
     return {
@@ -214,5 +241,12 @@ ion-toolbar {
 
 ion-footer {
   padding-left: 16px;
+}
+.modal-design .modal-wrapper {
+  height: 200px;
+  height: 50% !important;
+  --height: 200;
+  --height: 200px;
+  --background: black;
 }
 </style>
